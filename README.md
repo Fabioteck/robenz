@@ -1,7 +1,36 @@
-# RoBenz ⛽
+# ⛽ RoBenz v1.0 - Monitoraggio Prezzi Carburanti (Rovigo & Provincia)
 
-Web app Laravel per visualizzare i prezzi dei carburanti nella provincia di Rovigo (e Veneto),
-ordinati per prezzo, con dati aggiornati quotidianamente dagli Open Data MIMIT.
+RoBenz è una Web Application basata su **Laravel 13**, **PHP 8.4** e **Tailwind CSS v4** (compilato staticamente tramite **Vite**). Il portale è ottimizzato per la produzione e monitora in tempo reale i prezzi praticati dai distributori di carburante in tutta la provincia di Rovigo.
+Dati aggiornati quotidianamente dagli Open Data MIMIT.
+
+## 🚀 Funzionalità Implementate (v1.0 Stabile)
+
+- **Filtri di Ricerca Avanzati (Index):** Sistema di filtraggio asincrono e dinamico basato su **Alpine.js**. Permette di segmentare i distributori per tipo di carburante (*Benzina, Gasolio, GPL, Metano*), per Comune della provincia di Rovigo e per tipo di erogazione (*Self / Servito*).
+- **Algoritmo di Convenienza:** La lista ordina automaticamente i distributori dal più economico al più caro. Il distributore in prima posizione riceve l'evidenziazione estetica e il badge speciale `🏆 Più economico`.
+- **Scheda di Dettaglio Geolocalizzata (Show):** Ogni distributore ha una pagina dedicata che mostra i listini prezzi completi per ogni tipo di erogazione e include un modulo cartografico **Leaflet.js** locale (senza dipendenze da chiavi API esterne), centrato e zoomato in close-up sulla posizione esatta della stazione.
+- **Semaforo di Freschezza Dati:** Un indicatore visivo dinamico a tre colori (*Verde, Giallo, Rosso*) mostra lo stato di aggiornamento dei prezzi (ultime 24h, ieri, o più di 2 giorni).
+
+## 🛠️ Architettura Tecnica & Ottimizzazioni di Produzione
+
+- **Ottimizzazione Livello Dati:** Architettura basata su database **SQLite** protetta da un doppio strato di **Cache (Laravel Cache System)** con scadenze differenziate (30 minuti per le stazioni filtrate, 24 ore per l'elenco comuni) per minimizzare le interrogazioni al disco. I dati Eloquent sono normalizzati in array nativi in cache per prevenire errori di serializzazione degli oggetti.
+- **Front-End Performance:** Migrazione completa dal vecchio Play CDN al compilatore statico **Vite + Tailwind CSS v4**. La palette del brand è mappata nativamente nel tema CSS.
+- **Server Web & Sicurezza:** Servito tramite **Apache** su ambiente Ubuntu, configurato con puntamento rigido sulla sotto-cartella `/public` e modulo `mod_rewrite` attivo. Sicurezza crittografica HTTPS gestita tramite certificato SSL **Let's Encrypt (Certbot)** con rinnovo automatico.
+- **Permessi del File System:** Struttura dei permessi allineata (`775` su `storage` e `bootstrap/cache`) per garantire la corretta compilazione delle viste Blade sotto l'utente `www-data`.
+
+## 💻 Comandi Utili per la Manutenzione
+
+In caso di aggiornamenti del codice o dei fogli di stile in produzione, eseguire:
+
+```bash
+# Compilazione statica degli asset (Tailwind / Vite)
+npm run build
+
+# Svuotamento e rigenerazione delle cache di Laravel
+php artisan view:clear
+php artisan config:cache
+php artisan route:cache
+```
+
 
 ---
 
@@ -92,10 +121,10 @@ Encoding: UTF-8
 
 ## Roadmap
 
-### ✅ MVP (questo repo)
+### ✅ MVP - Version 1 (questo repo)
 - [x] Import CSV MIMIT con filtro provincia
-- [x] Modelli Station + Price
-- [x] Lista distributori ordinata per prezzo
+- [x] Modelli Station + Price + Mappa
+- [x] Lista distributori ordinata per prezzo 
 - [x] Filtro per comune e tipo carburante
 - [x] Toggle Self / Servito
 - [x] Semaforo freschezza dati
@@ -103,18 +132,6 @@ Encoding: UTF-8
 - [x] Pagina dettaglio con link Google Maps
 - [x] Sync automatico (Scheduler Laravel)
 - [x] Cache query 30 minuti
-
-### 🔵 v1
-- [ ] UI con Tailwind compilato (Vite + npm)
-- [ ] Geolocalizzazione browser → distributore più vicino
-- [ ] Paginazione / lazy load lista
-- [ ] Meta tag SEO per ogni comune
-
-### 🟣 v2
-- [ ] Storico prezzi (grafico settimanale)
-- [ ] PWA installabile su mobile
-- [ ] Alert prezzo via email
-- [ ] Estensione a tutto il Veneto
 
 ---
 
