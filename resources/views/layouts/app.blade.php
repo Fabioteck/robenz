@@ -4,26 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#1e40af">
-    <title>@yield('title', 'RovigoCarburanti') – Prezzi benzina e gasolio a Rovigo</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50:  '#eff6ff',
-                            100: '#dbeafe',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            900: '#1e3a8a',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <title>@yield('title', 'RoBenz') – Prezzi carburanti a Rovigo</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         /* Animazione fade-in per le card */
         @keyframes fadeUp {
@@ -61,7 +43,8 @@
     <footer class="border-t border-slate-200 bg-white mt-8">
         <div class="max-w-2xl mx-auto px-4 py-4 text-center text-xs text-slate-400 space-y-1">
             <p>Dati aggiornati quotidianamente · Fonte: <strong>MIMIT Open Data</strong></p>
-            <p>Progetto indipendente, non affiliato al Ministero</p>
+            <p>Progetto indipendente e libero (<a href="https://github.com/fabioteck/robenz" class="text-blue-500 hover:underline">GitHub</a>), 
+                sviluppato da <a href="https://www.fabioteck.it" class="text-blue-500 hover:underline">Fabio Frigeri</a>per la città di Rovigo</p>
         </div>
     </footer>
 

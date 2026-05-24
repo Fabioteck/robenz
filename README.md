@@ -1,4 +1,4 @@
-# RovigoCarburanti ⛽
+# RoBenz ⛽
 
 Web app Laravel per visualizzare i prezzi dei carburanti nella provincia di Rovigo (e Veneto),
 ordinati per prezzo, con dati aggiornati quotidianamente dagli Open Data MIMIT.
